@@ -16,4 +16,14 @@ The information of the real world is chaotic light — vast, disordered, overwhe
 
 Its multifaceted nature lets it handle tasks of all kinds. Its transparency means every output leaves a trace you can follow.
 
-> Skills · MCP · Long Memory · RAG Knowledge Library
+## Planned Features
+
+- [ ] Skills
+- [ ] MCP
+- [ ] Long Memory
+- [ ] RAG Knowledge Library
+- [ ] DIY SubAgents
+- [ ] Ask User Question
+- [ ] Global Memory File
+- [ ] Multi Hierarchy Memory File
+- [ ] Slash Commands

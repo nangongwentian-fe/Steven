@@ -1,75 +1,36 @@
-# React + TypeScript + Vite
+# Steven Web (Vite + React + Electron)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+`steven-web` 现在同时支持浏览器模式和 Electron 桌面模式。
 
-Currently, two official plugins are available:
+## 环境要求
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js `>=22`
+- Bun `>=1.3`
+- macOS 下生成 `.icns` 需要系统自带 `sips` 与 `iconutil`
 
-## React Compiler
+## 开发命令
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- `bun run dev:web`：仅启动 Vite（浏览器模式）
+- `bun run dev:desktop`：启动 Vite + Electron（桌面模式）
+- `bun run lint`：执行 ESLint
 
-Note: This will impact Vite dev & build performances.
+## 构建命令
 
-## Expanding the ESLint configuration
+- `bun run build:web`：构建浏览器产物到 `dist`
+- `bun run build:desktop`：构建浏览器 + Electron 产物到 `dist` 和 `dist-electron`
+- `bun run icons:generate`：从 `../docs/images/Steven.png` 生成应用图标
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 发行命令（未签名）
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- `bun run dist:mac`：输出 macOS `.dmg`
+- `bun run dist:win`：输出 Windows NSIS `.exe`
+- `bun run dist:linux`：输出 Linux `.AppImage`
+- `bun run dist:all`：尝试一次构建三平台（建议在 CI 或对应系统执行）
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+安装包输出目录：`release/`
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Electron 安全基线
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `contextIsolation: true`
+- `nodeIntegration: false`
+- 仅通过 `preload` 暴露白名单 API：`window.stevenDesktop`

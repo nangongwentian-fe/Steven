@@ -16,4 +16,16 @@
 
 它的多面性，让它能够处理各种形态的任务；它的透明性，让每一次输出都有迹可循。
 
-> 支持 Skills · MCP · Long Memory · RAG Knowledge Library
+---
+
+## 待实现功能
+
+- [ ] Skills
+- [ ] MCP
+- [ ] Long Memory
+- [ ] RAG Knowledge Library
+- [ ] DIY SubAgents
+- [ ] Ask User Question
+- [ ] Global Memory File
+- [ ] Multi Hierarchy Memory File
+- [ ] Slash Commands

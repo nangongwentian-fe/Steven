@@ -2,12 +2,24 @@
   "name": "steven-web",
   "private": true,
   "version": "0.0.0",
+  "description": "Steven Web desktop application powered by Vite + React + Electron",
+  "author": "Steven Jay",
+  "main": "dist-electron/main.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:web": "vite",
+    "dev:desktop": "cross-env STEVEN_DESKTOP=true vite",
     "build": "tsc -b && vite build",
+    "build:web": "tsc -b && vite build",
+    "build:desktop": "cross-env STEVEN_DESKTOP=true tsc -b && cross-env STEVEN_DESKTOP=true vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "icons:generate": "node scripts/generate-icons.mjs",
+    "dist:mac": "bun run icons:generate && bun run build:desktop && electron-builder --mac dmg",
+    "dist:win": "bun run icons:generate && bun run build:desktop && electron-builder --win nsis",
+    "dist:linux": "bun run icons:generate && bun run build:desktop && electron-builder --linux AppImage",
+    "dist:all": "bun run icons:generate && bun run build:desktop && electron-builder -mwl"
   },
   "dependencies": {
     "react": "^19.2.0",
@@ -20,12 +32,51 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
     "babel-plugin-react-compiler": "^1.0.0",
+    "cross-env": "^10.1.0",
+    "electron": "^40.6.0",
+    "electron-builder": "^26.8.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "png-to-ico": "^3.0.1",
+    "png2icons": "^2.0.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vite-plugin-electron": "^0.29.0"
+  },
+  "build": {
+    "appId": "com.steven.web",
+    "productName": "Steven Web",
+    "asar": true,
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**",
+      "dist-electron/**",
+      "package.json"
+    ],
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "build/icon.icns"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "icon": "build/icon.png",
+      "category": "Utility"
+    }
   }
 }

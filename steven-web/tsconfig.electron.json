@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.node.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.electron.tsbuildinfo",
+    "types": ["node", "electron"]
+  },
+  "include": ["electron/**/*.ts", "src/electron/types.ts"]
+}

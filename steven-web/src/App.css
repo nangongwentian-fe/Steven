@@ -12,6 +12,10 @@
   box-shadow: 0 12px 38px rgba(15, 23, 42, 0.08);
 }
 
+.app-shell-desktop {
+  margin-top: calc(2.5rem + 40px);
+}
+
 .app-shell h1 {
   margin: 0;
   color: #111827;

@@ -10,8 +10,21 @@ const __dirname = path.dirname(__filename)
 let mainWindow: BrowserWindow | null = null
 
 const createMainWindow = async () => {
+  const titleBarOptions =
+    process.platform === 'darwin'
+      ? { titleBarStyle: 'hiddenInset' as const }
+      : {
+          titleBarStyle: 'hidden' as const,
+          titleBarOverlay: {
+            color: '#00000000',
+            symbolColor: '#4b5563',
+            height: 40,
+          },
+        }
+
   const window = new BrowserWindow({
     ...MAIN_WINDOW_OPTIONS,
+    ...titleBarOptions,
     show: false,
     title: 'Steven Web',
     webPreferences: {
